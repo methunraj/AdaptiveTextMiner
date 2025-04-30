@@ -113,119 +113,107 @@ The system is built with Python and Streamlit, comprising several key components
 
 ```mermaid
 graph TD
-    A[Start app.py] --> B{Load Config/Models};
-    B --> C[Initialize Services];
-    C --> D[Display UI (Streamlit)];
-    D --> E{User Interaction};
-    E --> F[Configure Settings (Sidebar)];
-    E --> G[Manage Schemas (Tab 2)];
-    E --> H[Process Documents (Tab 1)];
-    F --> E;
-    G --> E;
-    H --> I{Start Processing?};
-    I -- Yes --> J[Run Extraction Workflow];
-    I -- No --> E;
-    J --> K[Display Results/Download];
-    K --> E;
+    A[Start app.py] --> B[Load Config/Models]
+    B --> C[Initialize Services]
+    C --> D[Display UI Streamlit]
+    D --> E[User Interaction]
+    E --> F[Configure Settings Sidebar]
+    E --> G[Manage Schemas Tab 2]
+    E --> H[Process Documents Tab 1]
+    F --> E
+    G --> E
+    H --> I{Start Processing?}
+    I -- Yes --> J[Run Extraction Workflow]
+    I -- No --> E
+    J --> K[Display Results/Download]
+    K --> E
 ```
 
 ### Single Document Processing Flow
 
 ```mermaid
 graph TD
-    A[Process Button Clicked] --> B[Get Single File Content];
-    B --> C[Save Document (StorageManager)];
-    C --> D[Chunk Document (ContextManager)];
-    D --> E[Create Understanding Prompt (PromptManager)];
-    E --> F[Call LLM (LLMService)];
-    F --> G[Create Extraction Strategy (PromptManager)];
-    G --> H{Loop Through Chunks};
-    H -- Next Chunk --> I[Create Extraction Prompt (Schema/Custom/Default)];
-    I --> J[Call LLM (LLMService)];
-    J --> K[Parse Result];
-    K --> L[Append to Initial Results];
-    L --> H;
-    H -- All Chunks Done --> M[Save Results (StorageManager)];
-    M --> N[Display Results / Provide Download];
-    N --> O[End Processing];
-
-    %% Optional Feedback Loop (Conceptual - Needs Integration) 
-    % L --> FB1[Analyze Initial Results (FeedbackSystem)];
-    % FB1 --> FB2[Generate Adaptive Prompt (FeedbackSystem)];
-    % FB2 --> FB_H{Loop Through Chunks (Refined)};
-    % FB_H -- Next Chunk --> FB_I[Use Refined Prompt];
-    % FB_I --> FB_J[Call LLM];
-    % FB_J --> FB_K[Parse Result];
-    % FB_K --> FB_L[Append to Final Results];
-    % FB_L --> FB_H;
-    % FB_H -- All Chunks Done --> M; 
+    A[Process Button Clicked] --> B[Get Single File Content]
+    B --> C[Save Document StorageManager]
+    C --> D[Chunk Document ContextManager]
+    D --> E[Create Understanding Prompt PromptManager]
+    E --> F[Call LLM LLMService]
+    F --> G[Create Extraction Strategy PromptManager]
+    G --> H{Loop Through Chunks}
+    H -- Next Chunk --> I[Create Extraction Prompt Schema/Custom/Default]
+    I --> J[Call LLM LLMService]
+    J --> K[Parse Result]
+    K --> L[Append to Initial Results]
+    L --> H
+    H -- All Chunks Done --> M[Save Results StorageManager]
+    M --> N[Display Results / Provide Download]
+    N --> O[End Processing]
 ```
 
 ### Batch Document Processing Flow
 
 ```mermaid
 graph TD
-    A[Process Button Clicked] --> B[Get File List (Upload/Folder)];
-    B --> C{Checkpoints Enabled?};
-    C -- Yes --> D[Load Checkpoint (Processed Files)];
-    C -- No --> E[Initialize Empty Processed List];
-    D --> E;
-    E --> F{Loop Through Files};
-    F -- Next File --> G{File Already Processed?};
-    G -- Yes --> F;
-    G -- No --> H[Read File Content];
-    H --> I[Save Document (StorageManager)];
-    I --> J[Chunk Document (ContextManager)];
-    J --> K[Run Understanding Pass (LLM)];
-    K --> L[Create Extraction Strategy];
-    L --> M{Loop Through Chunks};
-    M -- Next Chunk --> N[Create Extraction Prompt (Schema/Default)];
-    N --> O[Call LLM (LLMService)];
-    O --> P[Parse Result];
-    P --> Q[Append to File Results];
-    Q --> M;
-    M -- All Chunks Done --> R[Save Individual File Results (Excel)];
-    R --> S{Combine Results Enabled?};
-    S -- Yes --> T[Add File Results to Batch List];
-    S -- No --> U[Update Checkpoint];
-    T --> U;
-    U --> F;
-    F -- All Files Done --> V[Batch Complete Status];
-    V --> W{Combine Results Enabled?};
-    W -- Yes --> X[Concatenate Batch DataFrames];
-    X --> Y[Save Combined Excel File];
-    Y --> Z[Provide Download / Cleanup Option];
-    W -- No --> AA[End Processing];
-    Z --> AA;
+    A[Process Button Clicked] --> B[Get File List Upload/Folder]
+    B --> C{Checkpoints Enabled?}
+    C -- Yes --> D[Load Checkpoint Processed Files]
+    C -- No --> E[Initialize Empty Processed List]
+    D --> E
+    E --> F{Loop Through Files}
+    F -- Next File --> G{File Already Processed?}
+    G -- Yes --> F
+    G -- No --> H[Read File Content]
+    H --> I[Save Document StorageManager]
+    I --> J[Chunk Document ContextManager]
+    J --> K[Run Understanding Pass LLM]
+    K --> L[Create Extraction Strategy]
+    L --> M{Loop Through Chunks}
+    M -- Next Chunk --> N[Create Extraction Prompt Schema/Default]
+    N --> O[Call LLM LLMService]
+    O --> P[Parse Result]
+    P --> Q[Append to File Results]
+    Q --> M
+    M -- All Chunks Done --> R[Save Individual File Results Excel]
+    R --> S{Combine Results Enabled?}
+    S -- Yes --> T[Add File Results to Batch List]
+    S -- No --> U[Update Checkpoint]
+    T --> U
+    U --> F
+    F -- All Files Done --> V[Batch Complete Status]
+    V --> W{Combine Results Enabled?}
+    W -- Yes --> X[Concatenate Batch DataFrames]
+    X --> Y[Save Combined Excel File]
+    Y --> Z[Provide Download / Cleanup Option]
+    W -- No --> AA[End Processing]
+    Z --> AA
 ```
 
 ### Schema Management Flow
 
 ```mermaid
 graph TD
-    A[Navigate to Schema Tab] --> B{View Existing Schemas?};
-    B -- Yes --> C[List Schemas (StorageManager)];
-    C --> D[Display Schemas in Table];
-    D --> E{Select Schema?};
-    E -- Yes --> F[Get Schema Details (StorageManager)];
-    F --> G[Display JSON];
-    G --> H{Action? (Delete/Export)};
-    H -- Delete --> I[Delete Schema (StorageManager)];
-    H -- Export --> J[Provide Download Button];
-    I --> C; % Refresh list
-    J --> E;
-    E -- No --> K{Create New Schema?};
-    
-    B -- No --> K;
-    K -- Yes --> L[Display Creation Form];
-    L --> M[User Enters Details + JSON];
-    M --> N[Submit Form];
-    N --> O[Validate Input];
-    O -- Valid --> P[Save Schema (StorageManager)];
-    O -- Invalid --> Q[Show Error Message];
-    P --> C; % Refresh list
-    Q --> L;
-    K -- No --> A; % Stay on tab
+    A[Navigate to Schema Tab] --> B{View Existing Schemas?}
+    B -- Yes --> C[List Schemas StorageManager]
+    C --> D[Display Schemas in Table]
+    D --> E{Select Schema?}
+    E -- Yes --> F[Get Schema Details StorageManager]
+    F --> G[Display JSON]
+    G --> H{Action? Delete/Export}
+    H -- Delete --> I[Delete Schema StorageManager]
+    H -- Export --> J[Provide Download Button]
+    I --> C
+    J --> E
+    E -- No --> K{Create New Schema?}
+    B -- No --> K
+    K -- Yes --> L[Display Creation Form]
+    L --> M[User Enters Details + JSON]
+    M --> N[Submit Form]
+    N --> O[Validate Input]
+    O -- Valid --> P[Save Schema StorageManager]
+    O -- Invalid --> Q[Show Error Message]
+    P --> C
+    Q --> L
+    K -- No --> A
 ```
 
 ## Directory Structure
