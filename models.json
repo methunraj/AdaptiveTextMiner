@@ -1,0 +1,107 @@
+[
+  {
+    "provider": "OpenAI",
+    "models": [
+      {
+        "model_id": "gpt-4.1",
+        "display_name": "GPT-4.1",
+        "description": "OpenAI's flagship 2025 model, 1M context, strong coding & reasoning.",
+        "context_window": 1000000,
+        "max_output_tokens": 32768,
+        "knowledge_cutoff": "2024-06",
+        "pricing": {
+          "input_per_1M": 2.0,
+          "output_per_1M": 8.0
+        },
+        "features": ["text", "image", "function_calling"],
+        "api_type": "chat_completions",
+        "authentication_type": "bearer_token"
+      },
+      {
+        "model_id": "o4-mini",
+        "display_name": "o4-mini",
+        "description": "OpenAI's cost-efficient reasoning model, 200K context, strong math/coding/vision.",
+        "context_window": 200000,
+        "max_output_tokens": 100000,
+        "knowledge_cutoff": "2023-09",
+        "pricing": {
+          "input_per_1M": 1.10,
+          "output_per_1M": 4.40
+        },
+        "features": ["text", "image", "function_calling"],
+        "api_type": "chat_completions",
+        "authentication_type": "bearer_token"
+      }
+    ]
+  },
+  {
+    "provider": "DeepSeek",
+    "models": [
+      {
+        "model_id": "deepseek-reasoner",
+        "display_name": "DeepSeek R1",
+        "description": "DeepSeek's premier reasoning model, 64K context, MoE architecture.",
+        "context_window": 64000,
+        "max_output_tokens": 8000,
+        "knowledge_cutoff": "2024-03",
+        "pricing": {
+          "input_per_1M": 0.55,
+          "output_per_1M": 2.19
+        },
+        "features": ["text", "reasoning", "chain_of_thought"],
+        "api_type": "chat_completions",
+        "authentication_type": "api_key"
+      }
+    ]
+  },
+  {
+    "provider": "Qwen (Alibaba)",
+    "models": [
+      {
+        "model_id": "qwen-max",
+        "display_name": "Qwen Max",
+        "description": "Alibaba's Qwen Max, 32K context, MoE, strong multilingual/coding.",
+        "context_window": 32768,
+        "max_output_tokens": 8192,
+        "knowledge_cutoff": "2025-01",
+        "pricing": {
+          "input_per_1M": 1.60,
+          "output_per_1M": 6.40
+        },
+        "features": ["text", "multilingual", "coding", "structured_output"],
+        "api_type": "openai_compatible",
+        "authentication_type": "api_key"
+      },
+      {
+        "model_id": "qwen-plus-2025-04-28",
+        "display_name": "Qwen 3 - Plus",
+        "description": "Alibaba's Qwen Max, 32K context, MoE, strong multilingual/coding.",
+        "context_window": 131072,
+        "max_output_tokens": 8192,
+        "knowledge_cutoff": "2025-04",
+        "pricing": {
+          "input_per_1M": 0.40,
+          "output_per_1M": 1.2
+        },
+        "features": ["text", "multilingual", "coding", "structured_output"],
+        "api_type": "openai_compatible",
+        "authentication_type": "api_key"
+      },
+      {
+        "model_id": "qwen-turbo",
+        "display_name": "Qwen Turbo",
+        "description": "Alibaba's Qwen Turbo, 1M context, ultra-low cost, fast.",
+        "context_window": 1000000,
+        "max_output_tokens": 8192,
+        "knowledge_cutoff": "2025-01",
+        "pricing": {
+          "input_per_1M": 0.05,
+          "output_per_1M": 0.20
+        },
+        "features": ["text", "multilingual", "coding", "structured_output"],
+        "api_type": "openai_compatible",
+        "authentication_type": "api_key"
+      }
+    ]
+  }
+]
